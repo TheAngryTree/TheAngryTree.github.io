@@ -320,77 +320,17 @@
       
         
           
-            <p>那么，开始吧。</p>
-<h2 id="javascript的基本数据类型"><a href="#javascript的基本数据类型" class="headerlink" title="javascript的基本数据类型"></a>javascript的基本数据类型</h2><p>ECMAScript中有5种简单数据类型（也称为基本数据类型）: Undefined、Null、Boolean、Number和String。还有1种复杂的数据类型————Object，Object本质上是由一组无序的名值对组成的。</p>
-<p>其中Undefined、Null、Boolean、Number都属于基本类型。Object、Array和Function则属于引用类型，String有些特殊，具体的会在下面展开分析。</p>
-<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>ECMAScript中用var关键字来定义变量，因为js是弱类型的，所以无法确定变量一定会存储什么值，也就不知道变量到底会是什么类型，而且变量的类型可以随时改变。</p>
-<p>es6中新增了let命令来声明变量、const命令声明一个只读的常量。<br>let的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效。<br>const一旦声明，常量的值就不能改变。</p>
-<h3 id="typeof-操作符"><a href="#typeof-操作符" class="headerlink" title="typeof 操作符"></a>typeof 操作符</h3><p>由于js中的变量是松散类型的，所以它提供了一种检测当前变量的数据类型的方法，也就是typeof关键字.<br>通过typeof关键字，对这5种数据类型会返回下面的值（以字符串形式显示)<br>undefined ——— 如果值未定义 Undefined<br>boolean ——— 如果这个值是布尔值 Boolean<br>string ——— 如果这个值是字符串 String<br>number ——— 如果这个值是数值类型Number<br>object ——— 如果这个值是对象或null Object<br>需要注意的是typeof null返回为object,因为特殊值null被认为是一个空的对象引用。</p>
-<h3 id="Undefined"><a href="#Undefined" class="headerlink" title="Undefined"></a>Undefined</h3><p>Undefined类型只有一个值，即特殊的undefined。在使用var声明变量但未对其加以初始化时，这个变量的值就是undefined。</p>
-<h3 id="Null"><a href="#Null" class="headerlink" title="Null"></a>Null</h3><p>Null类型是第二个只有一个值的数据类型，这个特殊的值是null。从逻辑角度来看，null值表示一个空对象指针，而这也正是使用typeof操作符检测null时会返回object的原因。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var car = null;</span><br><span class="line">console.log(typeof car); // &quot;object&quot;</span><br></pre></td></tr></table></figure></p>
-<p>如果定义的变量准备在将来用于保存对象，那么最好将该变量初始化为null而不是其他值。这样一来，只要直接检测null值就可以知道相应的变量是否已经保存了一个对象的引用了。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(car != null)&#123;</span><br><span class="line">    //对car对象执行某些操作</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>实际上，undefined值是派生自null值的，因此ECMA-262规定对它们的相等性测试要返回true。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(undefined == null); //true</span><br></pre></td></tr></table></figure></p>
-<p>尽管null和undefined有这样的关系，但它们的用途完全不同。无论在什么情况下都没有必要把一个变量的值显式地设置为undefined，可是同样的规则对null却不适用。换句话说，只要意在保存对象的变量还没有真正保存对象，就应该明确地让该变量保存null值。这样做不仅可以体现null作为空对象指针的惯例，而且也有助于进一步区分null和undefined。</p>
-<h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h3><p>该类型只有两个字面值：true和false。</p>
-<p>虽然Boolean类型的字面值只有两个，但JavaScript中所有类型的值都有与这两个Boolean值等价的值。要将一个值转换为其对应的Boolean值，可以调用类型转换函数Boolean()</p>
-<p>下表给出了各种数据类型及其对象的转换规则。</p>
-<table>
-<thead>
-<tr>
-<th><strong>数据类型</strong></th>
-<th><strong>转换为true的值</strong></th>
-<th><strong>转换为false的值</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Boolean</td>
-<td>true</td>
-<td>false</td>
-</tr>
-<tr>
-<td>String</td>
-<td>任何非空的字符串</td>
-<td>“”(空字符串)</td>
-</tr>
-<tr>
-<td>Number</td>
-<td>任何非0数值（包括无穷大）</td>
-<td>0和NAN</td>
-</tr>
-<tr>
-<td>Object</td>
-<td>任何对象</td>
-<td>null</td>
-</tr>
-<tr>
-<td>Undefined</td>
-<td>不适用</td>
-<td>undefined</td>
-</tr>
-</tbody>
-</table>
-<p>ps:使用!!操作符转换布尔值!!一般用来将后面的表达式强制转换为布尔类型的数据（boolean），也就是只能是true或者false;</p>
-<p>对null与undefined等其他用隐式转换的值，用!操作符时都会产生true的结果，所以用两个感叹号的作用就在于将这些值转换为“等价”的布尔值；</p>
-<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><p>这种类型用来表示整数和浮点数值，还有一种特殊的数值，即NaN（非数值 Not a Number）。这个数值用于表示一个本来要返回数值的操作数未返回数值的情况（这样就不会抛出错误了）。例如，在其他编程语言中，任何数值除以0都会导致错误，从而停止代码执行。但在JavaScript中，任何数值除以0会返回NaN，因此不会影响其他代码的执行。</p>
-<p>NaN本身有两个非同寻常的特点。首先，任何涉及NaN的操作（例如NaN/10）都会返回NaN，这个特点在多步计算中有可能导致问题。其次，NaN与任何值都不相等，包括NaN本身。例如，下面的代码会返回false。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(NaN == NaN);    //false</span><br></pre></td></tr></table></figure></p>
-<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>String类型用于表示由零或多个16位Unicode字符组成的字符序列，即字符串。字符串可以由单引号(‘)或双引号(“)表示。</p>
-<h2 id="描述new一个对象的过程"><a href="#描述new一个对象的过程" class="headerlink" title="描述new一个对象的过程"></a>描述new一个对象的过程</h2><p>使用new关键字调用函数<code>new ClassA(…)</code>的具体步骤：</p>
-<ol>
-<li><p>创建空对象；　　</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置新对象的constructor属性为构造函数的名称，设置新对象的<strong>proto</strong>属性指向构造函数的prototype对象；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj.__proto__ = ClassA.prototype;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用新对象调用函数，函数中的this被指向新实例对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClassA.call(obj);　　//&#123;&#125;.构造函数();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将初始化完毕的新对象地址，保存到等号左边的变量中<br>注意：若构造函数中返回this或返回值是基本类型（number、string、boolean、null、undefined）的值，则返回新实例对象；若返回值是引用类型的值，则实际返回值为这个引用类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var foo = &quot;bar&quot;;</span><br><span class="line">function test () &#123;</span><br><span class="line">　　this.foo = &quot;foo&quot;;</span><br><span class="line">&#125;</span><br><span class="line">new test();            　　　　     //test中的this指新对象，并未改变全局的foo属性</span><br><span class="line">console.log(this.foo);              // &quot;bar&quot;</span><br><span class="line">console.log(new test().foo);    // &quot;foo&quot;;</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-          
+          那么，开始吧。
+javascript的基本数据类型ECMAScript中有5种简单数据类型（也称为基本数据类型）: Undefined、Null、Boolean、Number和String。还有1种复杂的数据类型————Object，Object本质上是由一组无序的名值对组成的。
+其中Undefin
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/27/new/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -508,8 +448,15 @@
       
         
           
-            
           
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/26/hello-world-1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -627,17 +574,15 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/26/hello-world/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -776,6 +721,7 @@
   
 </div>
 
+<!--
 
   <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
@@ -787,6 +733,7 @@
 
   <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
+-->
 
 
 
