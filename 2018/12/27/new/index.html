@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Alex的空间站">
 <meta property="og:description" content="那么，开始吧。 javascript的基本数据类型ECMAScript中有5种简单数据类型（也称为基本数据类型）: Undefined、Null、Boolean、Number和String。还有1种复杂的数据类型————Object，Object本质上是由一组无序的名值对组成的。 其中Undefined、Null、Boolean、Number都属于基本类型。Object、Array和Functio">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-28T09:13:34.820Z">
+<meta property="og:updated_time" content="2019-01-03T09:45:56.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端刷题笔记">
 <meta name="twitter:description" content="那么，开始吧。 javascript的基本数据类型ECMAScript中有5种简单数据类型（也称为基本数据类型）: Undefined、Null、Boolean、Number和String。还有1种复杂的数据类型————Object，Object本质上是由一组无序的名值对组成的。 其中Undefined、Null、Boolean、Number都属于基本类型。Object、Array和Functio">
@@ -400,9 +400,23 @@
 </li>
 </ol>
 <h2 id="如何用js判断一个对象是不是Array"><a href="#如何用js判断一个对象是不是Array" class="headerlink" title="如何用js判断一个对象是不是Array"></a>如何用js判断一个对象是不是Array</h2><p>1.调用数组的isArray方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.isArray(obj)</span><br></pre></td></tr></table></figure></p>
-<p>2.判断对象是否是Array的实例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.isArray(obj)</span><br></pre></td></tr></table></figure></p>
+<p>2.判断对象是否是Array的实例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj instanceof Array</span><br></pre></td></tr></table></figure></p>
 <p>3.Object.prototype.toString方法会取得对象的一个内部属性［［Class］］，然后依据这个属性，返回一个类似于［object Array］的字符串作为结果，call用来改变toString的this指向为待检测的对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object.prototype.toString.call(obj) ===‘[object Array]’</span><br></pre></td></tr></table></figure></p>
 <p>4.使用Array的构造函数判断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj.constructor===Array //true</span><br></pre></td></tr></table></figure></p>
+<h2 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="扩展运算符"></a>扩展运算符</h2><p>扩展运算符用三个点号表示，功能是把数组或类数组对象展开成一系列用逗号隔开的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var foo = function(a, b, c) &#123;</span><br><span class="line">    console.log(a);</span><br><span class="line">    console.log(b);</span><br><span class="line">    console.log(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var arr = [1, 2, 3];</span><br><span class="line"></span><br><span class="line">//传统写法</span><br><span class="line">foo(arr[0], arr[1], arr[2]);//使用扩展运算符foo(...arr);</span><br><span class="line">//1</span><br><span class="line">//2</span><br><span class="line">//3</span><br></pre></td></tr></table></figure></p>
+<h2 id="一行代码实现数组去重"><a href="#一行代码实现数组去重" class="headerlink" title="一行代码实现数组去重"></a>一行代码实现数组去重</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[...new Set([1,2,3,1,&apos;a&apos;,1,&apos;a&apos;])]</span><br></pre></td></tr></table></figure>
+<h2 id="javascript-原型链实现继承简单例子"><a href="#javascript-原型链实现继承简单例子" class="headerlink" title="javascript 原型链实现继承简单例子"></a>javascript 原型链实现继承简单例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function A()&#123;　　</span><br><span class="line">    this.name=&quot;zhangsan&quot;;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.getName=function()&#123; 　　</span><br><span class="line">    return this.name;</span><br><span class="line">&#125;</span><br><span class="line">function B()&#123;　　</span><br><span class="line">    this.age=20;</span><br><span class="line">&#125;</span><br><span class="line">B.prototype=new A();</span><br></pre></td></tr></table></figure>
+<h2 id="从输入url到页面展示有哪些步骤"><a href="#从输入url到页面展示有哪些步骤" class="headerlink" title="从输入url到页面展示有哪些步骤"></a>从输入url到页面展示有哪些步骤</h2><p>1、输入地址</p>
+<p>2、浏览器查找域名的 IP 地址　(DNS解析)</p>
+<p>3、浏览器向 web 服务器发送一个 HTTP 请求</p>
+<p>4、服务器的永久重定向响应</p>
+<p>5、浏览器跟踪重定向地址</p>
+<p>6、服务器处理请求</p>
+<p>7、服务器返回一个 HTTP 响应　</p>
+<p>8、浏览器显示 HTML</p>
+<p>ps：<br>1）解析html以构建dom树 -&gt; 构建render树 -&gt; 布局render树 -&gt; 绘制render树</p>
+<p>2）当文档加载过程中遇到js文件，html文档会挂起渲染（加载解析渲染同步）的线程，不仅要等待文档中js文件加载完毕，还要等待解析执行完毕，才可以恢复html文档的渲染线程。所以平时的代码中，js是放在html文档末尾的。</p>
+<p><a href="https://www.cnblogs.com/xianyulaodi/p/6547807.html" target="_blank" rel="noopener">详细解析地址戳我</a></p>
 
       
     </div>
@@ -564,7 +578,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript的基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">javascript的基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">1.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeof-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">typeof 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null"><span class="nav-number">1.4.</span> <span class="nav-text">Null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean"><span class="nav-number">1.5.</span> <span class="nav-text">Boolean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number"><span class="nav-number">1.6.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">1.7.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.8.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述new一个对象的过程"><span class="nav-number">2.</span> <span class="nav-text">描述new一个对象的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何用js判断一个对象是不是Array"><span class="nav-number">3.</span> <span class="nav-text">如何用js判断一个对象是不是Array</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript的基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">javascript的基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">1.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeof-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">typeof 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null"><span class="nav-number">1.4.</span> <span class="nav-text">Null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean"><span class="nav-number">1.5.</span> <span class="nav-text">Boolean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number"><span class="nav-number">1.6.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">1.7.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.8.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述new一个对象的过程"><span class="nav-number">2.</span> <span class="nav-text">描述new一个对象的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何用js判断一个对象是不是Array"><span class="nav-number">3.</span> <span class="nav-text">如何用js判断一个对象是不是Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展运算符"><span class="nav-number">4.</span> <span class="nav-text">扩展运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一行代码实现数组去重"><span class="nav-number">5.</span> <span class="nav-text">一行代码实现数组去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript-原型链实现继承简单例子"><span class="nav-number">6.</span> <span class="nav-text">javascript 原型链实现继承简单例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从输入url到页面展示有哪些步骤"><span class="nav-number">7.</span> <span class="nav-text">从输入url到页面展示有哪些步骤</span></a></li></ol></div>
             
 
           </div>
@@ -584,7 +598,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
