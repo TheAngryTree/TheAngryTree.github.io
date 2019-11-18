@@ -83,14 +83,17 @@
 <meta name="keywords" content="前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端刷题笔记">
-<meta property="og:url" content="http://yoursite.com/2018/12/27/new/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/12/27/note/index.html">
 <meta property="og:site_name" content="Alex的空间站">
 <meta property="og:description" content="那么，开始吧。 javascript的基本数据类型ECMAScript中有5种简单数据类型（也称为基本数据类型）: Undefined、Null、Boolean、Number和String。还有1种复杂的数据类型————Object，Object本质上是由一组无序的名值对组成的。 其中Undefined、Null、Boolean、Number都属于基本类型。Object、Array和Functio">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-15T07:15:58.202Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/27/note/2">
+<meta property="og:image" content="http://yoursite.com/2018/12/27/note/1">
+<meta property="og:updated_time" content="2019-11-18T08:50:02.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端刷题笔记">
 <meta name="twitter:description" content="那么，开始吧。 javascript的基本数据类型ECMAScript中有5种简单数据类型（也称为基本数据类型）: Undefined、Null、Boolean、Number和String。还有1种复杂的数据类型————Object，Object本质上是由一组无序的名值对组成的。 其中Undefined、Null、Boolean、Number都属于基本类型。Object、Array和Functio">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/27/note/2">
 
 
 
@@ -120,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/27/new/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/27/note/">
 
 
 
@@ -253,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/27/new/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/27/note/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alex Wang">
@@ -424,7 +427,49 @@
 <pre><code>$.getJSON(&apos;http://example.com/data.do?callback=?&apos;, function(jsondata){
 
 });
-</code></pre><p>2、通过修改document.domain来跨子域</p>
+</code></pre><p>2、通过修改document.domain来跨子域<br>将子域的document.domain改为与父域相同即可在子域中访问父域的内容</p>
+<p>3、使用window.name来进行跨域<br>跨通浏览器不同窗口</p>
+<h2 id="Promise和setTimeout执行顺序"><a href="#Promise和setTimeout执行顺序" class="headerlink" title="Promise和setTimeout执行顺序"></a>Promise和setTimeout执行顺序</h2><p>setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行</p>
+<img src="/2018/12/27/note/2" class="2.jpg This is an">
+<img src="/2018/12/27/note/1" class="1.jpg This is an">
+<p>task分为两大类, 分别是 Macro Task （宏任务）和 Micro Task（微任务）, 并且每个宏任务结束后, 都要清空所有的微任务,这里的 Macro Task也是我们常说的 task ，有些文章并没有对其做区分，后面文章中所提及的task皆看做宏任务( macro task)。</p>
+<p>(macro)task 主要包含：script( 整体代码)、setTimeout、setInterval、I/O、UI 交互事件、setImmediate(Node.js 环境)</p>
+<p>microtask主要包含：Promise、MutaionObserver、process.nextTick(Node.js 环境)</p>
+<p>setTimeout/Promise 等API便是任务源，而进入任务队列的是由他们指定的具体执行任务。来自不同任务源的任务会进入到不同的任务队列。其中 setTimeout 与 setInterval 是同源的。</p>
+<pre><code>console.log(&apos;script start&apos;);
+
+setTimeout(function() {
+  console.log(&apos;setTimeout&apos;);
+}, 0);
+
+Promise.resolve().then(function() {
+  console.log(&apos;promise1&apos;);
+}).then(function() {
+  console.log(&apos;promise2&apos;);
+});
+
+console.log(&apos;script end&apos;);
+</code></pre><p>1、整体 script 作为第一个宏任务进入主线程，遇到 console.log，输出 script start<br>2、遇到 setTimeout，其回调函数被分发到宏任务 Event Queue 中<br>3、遇到 Promise，其 then函数被分到到微任务 Event Queue 中,记为 then1，之后又遇到了 then 函数，将其分到微任务 Event Queue 中，记为 then2<br>4、遇到 console.log，输出 script end</p>
+<p>至此，Event Queue 中存在三个任务，如下表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>宏任务</strong></th>
+<th><strong>微任务</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setTimeout</td>
+<td>then1</td>
+</tr>
+<tr>
+<td>-</td>
+<td>then2</td>
+</tr>
+</tbody>
+</table>
+<p>执行微任务，首先执行then1，输出 promise1, 然后执行 then2，输出 promise2，这样就清空了所有微任务<br>执行 setTimeout 任务，输出 setTimeout 至此，输出的顺序是：script start, script end, promise1, promise2, setTimeout</p>
 
       
     </div>
@@ -586,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript的基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">javascript的基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">1.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeof-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">typeof 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null"><span class="nav-number">1.4.</span> <span class="nav-text">Null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean"><span class="nav-number">1.5.</span> <span class="nav-text">Boolean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number"><span class="nav-number">1.6.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">1.7.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.8.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述new一个对象的过程"><span class="nav-number">2.</span> <span class="nav-text">描述new一个对象的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何用js判断一个对象是不是Array"><span class="nav-number">3.</span> <span class="nav-text">如何用js判断一个对象是不是Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展运算符"><span class="nav-number">4.</span> <span class="nav-text">扩展运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一行代码实现数组去重"><span class="nav-number">5.</span> <span class="nav-text">一行代码实现数组去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript-原型链实现继承简单例子"><span class="nav-number">6.</span> <span class="nav-text">javascript 原型链实现继承简单例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从输入url到页面展示有哪些步骤"><span class="nav-number">7.</span> <span class="nav-text">从输入url到页面展示有哪些步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax跨域的几种方法以及每种方法的原理"><span class="nav-number">8.</span> <span class="nav-text">Ajax跨域的几种方法以及每种方法的原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript的基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">javascript的基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">1.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeof-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">typeof 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null"><span class="nav-number">1.4.</span> <span class="nav-text">Null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean"><span class="nav-number">1.5.</span> <span class="nav-text">Boolean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number"><span class="nav-number">1.6.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">1.7.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.8.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述new一个对象的过程"><span class="nav-number">2.</span> <span class="nav-text">描述new一个对象的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何用js判断一个对象是不是Array"><span class="nav-number">3.</span> <span class="nav-text">如何用js判断一个对象是不是Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展运算符"><span class="nav-number">4.</span> <span class="nav-text">扩展运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一行代码实现数组去重"><span class="nav-number">5.</span> <span class="nav-text">一行代码实现数组去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript-原型链实现继承简单例子"><span class="nav-number">6.</span> <span class="nav-text">javascript 原型链实现继承简单例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从输入url到页面展示有哪些步骤"><span class="nav-number">7.</span> <span class="nav-text">从输入url到页面展示有哪些步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax跨域的几种方法以及每种方法的原理"><span class="nav-number">8.</span> <span class="nav-text">Ajax跨域的几种方法以及每种方法的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise和setTimeout执行顺序"><span class="nav-number">9.</span> <span class="nav-text">Promise和setTimeout执行顺序</span></a></li></ol></div>
             
 
           </div>
